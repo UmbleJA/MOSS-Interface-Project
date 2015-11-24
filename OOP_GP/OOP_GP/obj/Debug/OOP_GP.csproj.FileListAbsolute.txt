@@ -1,0 +1,10 @@
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\bin\Debug\OOP_GP.exe.config
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\bin\Debug\OOP_GP.exe
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\bin\Debug\OOP_GP.pdb
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.csprojResolveAssemblyReference.cache
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.Form1.resources
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.Form2.resources
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.Properties.Resources.resources
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.csproj.GenerateResource.Cache
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.exe
+C:\Users\umbleja1\Desktop\OOP_GP\OOP_GP\OOP_GP\obj\Debug\OOP_GP.pdb
