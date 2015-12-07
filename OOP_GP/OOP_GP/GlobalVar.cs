@@ -9,7 +9,7 @@ namespace OOP_GP
     public static class GlobalVar
     {
         static string language;
-        public static string GlobalValue
+        public static string GlobalLang
         {
             get
             {
@@ -20,8 +20,8 @@ namespace OOP_GP
                 language = value;
             }
         }
-        public static string userID;
-        public static string GlobalInt
+        static string userID;
+        public static string GlobalID
         {
             get
             {

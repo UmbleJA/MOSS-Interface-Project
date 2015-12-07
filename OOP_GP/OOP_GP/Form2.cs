@@ -33,7 +33,6 @@ namespace OOP_GP
             const string subKey = "MossApplicationUserID";
             const string keyName = userRoot + "\\" + subKey;
             Registry.SetValue(keyName, "", maskedTextBox1.Text);
-            GlobalVar.GlobalInt = maskedTextBox1.Text;
             this.Close();
         }
 
@@ -43,7 +42,6 @@ namespace OOP_GP
             const string subKey = "MossApplicationLanguageFilter";
             const string keyName = userRoot + "\\" + subKey;
             Registry.SetValue(keyName, "", this.comboBox1.GetItemText(this.comboBox1.SelectedItem));
-            GlobalVar.GlobalValue = this.comboBox1.GetItemText(this.comboBox1.SelectedItem);
 
         }
 
