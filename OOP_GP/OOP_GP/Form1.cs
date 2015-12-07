@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Microsoft.Win32;
 
 namespace OOP_GP
 {
@@ -16,6 +17,7 @@ namespace OOP_GP
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void menuStrip1_Click(object sender, EventArgs e)
@@ -26,6 +28,22 @@ namespace OOP_GP
 
         private void submitButton_Click(object sender, EventArgs e)
         {
+            if (Registry.CurrentUser.OpenSubKey("MossApplicationUserID") == null)
+            {
+
+            }
+            else
+            {
+                Registry.CurrentUser.DeleteSubKey("MossApplicationUserID");
+            }
+            if (Registry.CurrentUser.OpenSubKey("MossApplicationLanguageFilter") == null)
+            {
+
+            }
+            else
+            {
+                Registry.CurrentUser.DeleteSubKey("MossApplicationLanguageFilter");
+            }
             this.Close();
 
         }
@@ -65,43 +83,103 @@ namespace OOP_GP
 
         private void reviewFilesButton_Click(object sender, EventArgs e)
         {
+            //making sure the registry key exists
+            const string userRoot = "HKEY_CURRENT_USER";
+            const string subKey = "MossApplicationUserID";
+            const string keyName = userRoot + "\\" + subKey;
+       
+
             FolderBrowserDialog folders = new FolderBrowserDialog();
             if (folders.ShowDialog() == DialogResult.OK)
             {
                 Directory.CreateDirectory(Path.Combine(Path.GetTempPath() + "Moss Temporary Files"));
                 string lastFolder = new DirectoryInfo(folders.SelectedPath).Name;
-                Directory.CreateDirectory(Path.GetTempPath() + "Moss Temporary Files\\" + GlobalVar.GlobalInt);
-                if (GlobalVar.GlobalValue == "C")
+                string sourDirectory = new DirectoryInfo(folders.SelectedPath).ToString();
+                Directory.CreateDirectory(Path.GetTempPath() + "Moss Temporary Files\\" + ((string)Registry.GetValue(keyName, "", "Default")));
+                string targetDirectory = Path.GetTempPath() + "Moss Temporary Files\\" + ((string)Registry.GetValue(keyName, "", "Default"));
+                DirectoryCopy(sourDirectory, targetDirectory, true);
+            }
+        }
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            const string userRoot = "HKEY_CURRENT_USER";
+            const string subKey = "MossApplicationLanguageFilter";
+            const string keyName = userRoot + "\\" + subKey;
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            if ((string)Registry.GetValue(keyName, "", "Default") == "C")
+            {
+                FileInfo[] files = dir.GetFiles();
+                foreach (FileInfo file in files)
                 {
-                    foreach (string newPath in Directory.GetFiles(folders.SelectedPath, "*.*",SearchOption.AllDirectories)
-                        .Where(s=>s.EndsWith(".c")|| s.EndsWith(".h")))
+                    if (file.Extension == ".c" || file.Extension == ".h")
                     {
-                        File.Copy(newPath, newPath.Replace(folders.SelectedPath, Path.GetTempPath() + "Moss Temporary Files\\" + GlobalVar.GlobalInt));
+                        string temppath = Path.Combine(destDirName, file.Name);
+                        file.CopyTo(temppath, true);
                     }
                 }
-                else if (GlobalVar.GlobalValue == "C++")
+            }
+            else if ((string)Registry.GetValue(keyName, "", "Default") == "C++")
+            {
+                FileInfo[] files = dir.GetFiles();
+                foreach (FileInfo file in files)
                 {
-                    foreach (string newPath in Directory.GetFiles(folders.SelectedPath, "*.*", SearchOption.AllDirectories)
-                        .Where(s => s.EndsWith(".cpp") || s.EndsWith(".h") || s.EndsWith(".cc") || s.EndsWith(".hpp")))
+                    if (file.Extension == ".cpp" || file.Extension == ".h" || file.Extension == ".cc" || file.Extension == ".hpp")
                     {
-                        File.Copy(newPath, newPath.Replace(folders.SelectedPath, Path.GetTempPath() + "Moss Temporary Files\\" + GlobalVar.GlobalInt));
+                        string temppath = Path.Combine(destDirName, file.Name);
+                        file.CopyTo(temppath, true);
                     }
                 }
-                else if (GlobalVar.GlobalValue == "Python")
+            }
+            else if ((string)Registry.GetValue(keyName, "", "Default") == "Python")
+            {
+                FileInfo[] files = dir.GetFiles();
+                foreach (FileInfo file in files)
                 {
-                    foreach (string newPath in Directory.GetFiles(folders.SelectedPath, "*.*", SearchOption.AllDirectories)
-                        .Where(s => s.EndsWith(".py")))
+                    if (file.Extension == ".py")
                     {
-                        File.Copy(newPath, newPath.Replace(folders.SelectedPath, Path.GetTempPath() + "Moss Temporary Files\\" + GlobalVar.GlobalInt));
+                        string temppath = Path.Combine(destDirName, file.Name);
+                        file.CopyTo(temppath, true);
                     }
                 }
-                else if (GlobalVar.GlobalValue == "C#")
+            }
+            else if ((string)Registry.GetValue(keyName, "", "Default") == "C#")
+            {
+                FileInfo[] files = dir.GetFiles();
+                foreach (FileInfo file in files)
                 {
-                    foreach (string newPath in Directory.GetFiles(folders.SelectedPath, "*.*", SearchOption.AllDirectories)
-                        .Where(s => s.EndsWith(".cs")))
+                    if (file.Extension == ".cs" || file.Extension == ".h")
                     {
-                        File.Copy(newPath, newPath.Replace(folders.SelectedPath, Path.GetTempPath() + "Moss Temporary Files\\" + GlobalVar.GlobalInt));
+                        string temppath = Path.Combine(destDirName, file.Name);
+                        file.CopyTo(temppath, true);
                     }
+                }
+            }
+            // Get the files in the directory and copy them to the new location.
+            
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = destDirName;
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
                 }
             }
         }
