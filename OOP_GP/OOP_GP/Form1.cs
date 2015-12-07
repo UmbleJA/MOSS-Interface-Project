@@ -30,7 +30,7 @@ namespace OOP_GP
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            Socket comm = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            /*Socket comm = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPAddress addr = IPAddress.Parse("172.11.137.159");
             int port = 16127;
             comm.Connect(addr, port);
@@ -47,7 +47,7 @@ namespace OOP_GP
             comm.Send(Encoding.ASCII.GetBytes("language" + GlobalVar.GlobalLang + "\n"));
 
             //send base data 
-            FileInfo baseData = new FileInfo(BASE_CODE_FILEPATH);
+            FileInfo baseData = new FileInfo(BASE_FILE_PATH);
             comm.Send(Encoding.ASCII.GetBytes("file 0 " + GlobalVar.GlobalLang + " " + baseData.Length + " " + " " + baseData.Name + "\n"));
             string line;
             System.IO.StreamReader baseFile = new System.IO.StreamReader(BASE_CODE_FILEPATH);
@@ -87,14 +87,8 @@ namespace OOP_GP
             comm.Send(Encoding.ASCII.GetBytes("end\n"));
             comm.Shutdown(SocketShutdown.Both);
             comm.Close();
-            if (Registry.CurrentUser.OpenSubKey("MossApplicationUserID") == null)
-            {
-
-            }
-            else
-            {
-                Registry.CurrentUser.DeleteSubKey("MossApplicationUserID");
-            }
+            */
+            //deleting the registry entries on program close
             if (Registry.CurrentUser.OpenSubKey("MossApplicationLanguageFilter") == null)
             {
 
@@ -109,12 +103,14 @@ namespace OOP_GP
 
         private void baseFilesButton_Click(object sender, EventArgs e)
         {
+            //string used for creating a registry entry
             const string userRoot = "HKEY_CURRENT_USER";
             const string subKey = "MossApplicationLanguageFilter";
             const string keyName = userRoot + "\\" + subKey;
              
             OpenFileDialog files = new OpenFileDialog();
 
+            //only shows particular files based on which language has been selected from options
             files.Multiselect = true;
             if ((string)Registry.GetValue(keyName,"","")=="C")
             {
@@ -133,6 +129,7 @@ namespace OOP_GP
                 files.Filter = "C# (*.cs)|*.cs|All Files (*.*)|*.*";
             }       
             files.FilterIndex = 1;
+            //needs to be changed to concatonate the files and make them into one temp file
             if (files.ShowDialog() == DialogResult.OK)
             {
                 var fileName = files.FileName;
@@ -150,7 +147,7 @@ namespace OOP_GP
             const string subKey = "MossApplicationUserID";
             const string keyName = userRoot + "\\" + subKey;
        
-
+            //opens folder dialogue and copies all the files in the folder into the temp directory
             FolderBrowserDialog folders = new FolderBrowserDialog();
             if (folders.ShowDialog() == DialogResult.OK)
             {
@@ -162,6 +159,7 @@ namespace OOP_GP
                 DirectoryCopy(sourDirectory, targetDirectory, true);
             }
         }
+        //lol thanks microsoft
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             const string userRoot = "HKEY_CURRENT_USER";
