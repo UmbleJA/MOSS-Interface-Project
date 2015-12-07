@@ -58,11 +58,13 @@ namespace OOP_GP
 
             //send all files
             int fileCount = 1;
-            List<string> directories = Directory.GetDirectories(FILEPATH);
-            foreach (string dir in directories)
+            string mossTemp = Path.GetTempPath() + "Moss Temporary Files";
+            NetworkSend(mossTemp, 1);
+            
+            /*foreach (string dir in (Directory.GetDirectories(Path.GetTempPath() + "Moss Temporary Files"));
             {
                 List<string> files = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories).ToList();
-                foreach (string f in files)
+                foreach (string f in Directory.GetFiles(f,"*.*", SearchOption.AllDirectories)
                 {
 
                     System.IO.StreamReader file = new System.IO.StreamReader(f);
@@ -244,5 +246,17 @@ namespace OOP_GP
             }
         }
 
+        //recursive sending and cool stuff like that
+        private static void NetworkSend(string sourceDirName, int fileCount)
+        {
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+            DirectoryInfo[] direc = dir.GetDirectories();
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                System.IO.StreamReader streamSend = new System.IO.StreamReader(file.ToString());
+                //comm.Send(Encoding.ASCII.GetBytes("file " + fileCount + " " + GlobalVar.GlobalLang + " " + fData.Length + " " + " " + fData.Name + "\n"));
+            }
+        }
     }
 }

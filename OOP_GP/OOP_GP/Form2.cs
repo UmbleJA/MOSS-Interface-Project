@@ -22,6 +22,7 @@ namespace OOP_GP
         {
             //saves a users ID during their session
             maskedTextBox1.Mask = "000000";
+            maskedTextBox2.Mask = "000000";
             const string userRoot = "HKEY_CURRENT_USER";
             const string subKey = "MossApplicationUserID";
             const string keyName = userRoot + "\\" + subKey;
@@ -34,6 +35,9 @@ namespace OOP_GP
             const string subKey = "MossApplicationUserID";
             const string keyName = userRoot + "\\" + subKey;
             Registry.SetValue(keyName, "", maskedTextBox1.Text);
+            const string subKey2 = "MossApplicationSensitivity";
+            const string keyName2 = userRoot + "\\" + subKey2;
+            Registry.SetValue(keyName2, "", maskedTextBox2.Text);
             this.Close();
         }
 
@@ -52,6 +56,12 @@ namespace OOP_GP
         {
             toolTip1.ToolTipTitle = "Invalid Input";
             toolTip1.Show("Invalid UserID", maskedTextBox1, maskedTextBox1.Location, 5000);
+        }
+
+        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            toolTip2.ToolTipTitle = "Invalid Input";
+            toolTip2.Show("Invalid Sensitivity", maskedTextBox2, maskedTextBox2.Location, 5000);
         }
     }
 }

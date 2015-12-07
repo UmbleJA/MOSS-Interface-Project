@@ -37,6 +37,7 @@
             this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // comboBox1
@@ -101,6 +102,7 @@
             this.maskedTextBox2.Size = new System.Drawing.Size(121, 20);
             this.maskedTextBox2.TabIndex = 2;
             this.maskedTextBox2.ValidatingType = typeof(int);
+            this.maskedTextBox2.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox2_MaskInputRejected);
             // 
             // okButton
             // 
@@ -145,5 +147,6 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBox2;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip toolTip2;
     }
 }
