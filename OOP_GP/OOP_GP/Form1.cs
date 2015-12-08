@@ -156,8 +156,8 @@ namespace OOP_GP
                 Directory.CreateDirectory(Path.Combine(Path.GetTempPath() + "Moss Temporary Files"));
                 string lastFolder = new DirectoryInfo(folders.SelectedPath).Name;
                 string sourDirectory = new DirectoryInfo(folders.SelectedPath).ToString();
-                Directory.CreateDirectory(Path.GetTempPath() + "Moss Temporary Files\\" + ((string)Registry.GetValue(keyName, "", "Default")));
-                string targetDirectory = Path.GetTempPath() + "Moss Temporary Files\\" + ((string)Registry.GetValue(keyName, "", "Default"));
+                Directory.CreateDirectory(Path.GetTempPath() + "Moss Temporary Files\\" + ((string)Registry.GetValue(keyName, "", "Default"))+ "\\" + lastFolder);
+                string targetDirectory = Path.GetTempPath() + "Moss Temporary Files\\" + ((string)Registry.GetValue(keyName, "", "Default") + "\\" + lastFolder);
                 DirectoryCopy(sourDirectory, targetDirectory, true);
             }
         }
